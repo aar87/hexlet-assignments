@@ -1,0 +1,25 @@
+@import exercise.dto.posts.PostsPage
+@import exercise.util.NamedRoutes
+@param PostsPage page
+
+@template.layout.page(
+content = @`
+    @if(page.getPosts().isEmpty())
+        <p>Still no posts</p>
+    @else
+        @for(var post : page.getPosts())
+            <div>
+                <p><a href="${NamedRoutes.postPath(post.getId())}">${post.getName()}</a></p>
+            </div>
+        @endfor
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @if(page.getPageNumber() > 1)
+                    <li class="page-item"><a class="page-link" href="?page=${(page.getPageNumber() - 1)}">Previous</a></li>
+                @endif
+                <li class="page-item"><a class="page-link" href="?page=${(page.getPageNumber() + 1)}">Next</a></li>
+            </ul>
+        </nav>
+    @endif
+`
+)
