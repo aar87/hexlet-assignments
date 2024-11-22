@@ -29,23 +29,20 @@ public class PeopleController {
     }
 
     // BEGIN
-    @GetMapping()
-    public List<Person> people() {
+    @GetMapping
+    public List<Person> index() {
         return personRepository.findAll();
     }
-
-    @PostMapping()
-    @ResponseStatus(code = HttpStatus.CREATED)
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Person create(@RequestBody Person person) {
-        return personRepository.save(person);
+        personRepository.save(person);
+        return person;
     }
-
     @DeleteMapping(path = "/{id}")
-    public HttpStatus delete(@PathVariable long id) {
-        Person person = personRepository.findById(id).get();
-        personRepository.delete(person);
-
-        return HttpStatus.CREATED;
+    @ResponseStatus(HttpStatus.OK)
+    public void destroy(@PathVariable long id) {
+        personRepository.deleteById(id);
     }
     // END
 }
